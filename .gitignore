@@ -133,3 +133,6 @@ Temporary Items
 *.wsdt
 *.dbgdt
 *.dnx
+
+# VIM temp files
+*.swp
