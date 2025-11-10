@@ -119,6 +119,7 @@ module caster(
     wire [7:0] hbp;
     wire [11:0] hact;
     wire mirror_en;
+    wire blank_input;
     csr csr (
         .clk(clk),
         .rst(rst),
@@ -158,6 +159,7 @@ module caster(
         .csr_cfg_fbytes(frame_bytes),
         .csr_cfg_mindrv(csr_mindrv),
         .csr_mirror_en(mirror_en),
+        .csr_blank_input(blank_input),
         // Status input
         .sys_ready(sys_ready),
         .mig_error(mig_error),
@@ -444,7 +446,8 @@ module caster(
     wire [3:0] s2_osd_overlay = h_cnt_offset[0] ? osd_rd[7:4] : osd_rd[3:0];
     wire [31:0] s2_osd_overlay_y8 = {{8{s2_osd_overlay[3]}},
         {8{s2_osd_overlay[2]}}, {8{s2_osd_overlay[1]}}, {8{s2_osd_overlay[0]}}};
-    wire [31:0] s2_vin_overlayed = s2_osd_valid ? s2_osd_overlay_y8 : vin_pixel;
+    wire [31:0] s2_vin_overlayed = s2_osd_valid ? s2_osd_overlay_y8 :
+        blank_input ? {32{1'b1}} : vin_pixel;
 
     // Image dithering
     // All these processing has 1 cycle delay
