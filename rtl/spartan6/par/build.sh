@@ -1,6 +1,6 @@
-#!/bin.sh
+#!/bin/sh
 
 echo Building bitstream
-./ise_flow.bat
+./ise_flow.sh
 cp top.bit fpga.bit
-./clean.bat
+./clean.sh
