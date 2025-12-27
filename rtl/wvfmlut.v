@@ -47,17 +47,24 @@ module wvfmlut(
         .doutb(bram_doutb)
     );
 
+    reg [1:0] bsela;
+    reg [1:0] bselb;
+    always @(posedge clk) begin
+        bsela <= addra[1:0];
+        bselb <= addrb[1:0];
+    end
+
     assign douta =
-        (addra[1:0] == 2'd0) ? bram_douta[1:0] :
-        (addra[1:0] == 2'd1) ? bram_douta[3:2] :
-        (addra[1:0] == 2'd2) ? bram_douta[5:4] :
-        (addra[1:0] == 2'd3) ? bram_douta[7:6] : 2'bx;
+        (bsela[1:0] == 2'd0) ? bram_douta[1:0] :
+        (bsela[1:0] == 2'd1) ? bram_douta[3:2] :
+        (bsela[1:0] == 2'd2) ? bram_douta[5:4] :
+        (bsela[1:0] == 2'd3) ? bram_douta[7:6] : 2'bx;
 
     assign doutb =
-        (addrb[1:0] == 2'd0) ? bram_doutb[1:0] :
-        (addrb[1:0] == 2'd1) ? bram_doutb[3:2] :
-        (addrb[1:0] == 2'd2) ? bram_doutb[5:4] :
-        (addrb[1:0] == 2'd3) ? bram_doutb[7:6] : 2'bx;
+        (bselb[1:0] == 2'd0) ? bram_doutb[1:0] :
+        (bselb[1:0] == 2'd1) ? bram_doutb[3:2] :
+        (bselb[1:0] == 2'd2) ? bram_doutb[5:4] :
+        (bselb[1:0] == 2'd3) ? bram_doutb[7:6] : 2'bx;
 
 endmodule
 `default_nettype wire
