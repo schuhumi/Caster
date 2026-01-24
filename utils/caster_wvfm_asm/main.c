@@ -256,12 +256,9 @@ static void copy_lut(uint8_t* dst, uint8_t* src, size_t src_count) {
     for (size_t i = 0; i < src_count / 4; i++) {
         uint8_t val;
         val = *src++;
-        val <<= 2;
-        val |= *src++;
-        val <<= 2;
-        val |= *src++;
-        val <<= 2;
-        val |= *src++;
+        val |= (*src++ << 2);
+        val |= (*src++ << 4);
+        val |= (*src++ << 6);
         *dst++ = val;
     }
 }
@@ -270,8 +267,7 @@ static void copy_lut_4bpp(uint8_t* dst, uint8_t* src, size_t src_count) {
     for (size_t i = 0; i < src_count / 2; i++) {
         uint8_t val;
         val = *src++;
-        val <<= 4;
-        val |= *src++;
+        val |= (*src++ << 4);
         *dst++ = val;
     }
 }
